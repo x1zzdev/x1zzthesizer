@@ -7,11 +7,15 @@ import { SITE_TITLE } from '../consts';
 interface Props {
 	title: string;
 	description: string;
+	titleEn?: string;
+	descriptionEn?: string;
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
-const { title, description } = Astro.props;
+const { title, description, titleEn, descriptionEn } = Astro.props;
+const safeTitleEn = titleEn ?? null;
+const safeDescriptionEn = descriptionEn ?? null;
 ---
 
 <!-- Global Metadata -->
@@ -52,9 +56,34 @@ const { title, description } = Astro.props;
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image" />
 
-<!-- ─── Automatic language detection (localStorage + navigator.language) ── -->
-<script is:inline>
+<!-- ─── Automatic language detection + dynamic title/description swap ──── -->
+<script
+	define:vars={{
+		titleKr: title,
+		titleEn: safeTitleEn,
+		descriptionKr: description,
+		descriptionEn: safeDescriptionEn,
+	}}
+	is:inline
+>
 	(function () {
+		function applyLang(lang) {
+			document.documentElement.setAttribute('data-lang', lang);
+			document.documentElement.setAttribute('lang', lang === 'kr' ? 'ko' : 'en');
+
+			var useEn = lang === 'en' && titleEn;
+			document.title = useEn ? titleEn : titleKr;
+
+			var useEnDesc = lang === 'en' && descriptionEn;
+			var descTag = document.querySelector('meta[name="description"]');
+			var ogDescTag = document.querySelector('meta[property="og:description"]');
+			var ogTitleTag = document.querySelector('meta[property="og:title"]');
+			var finalDesc = useEnDesc ? descriptionEn : descriptionKr;
+			if (descTag) descTag.setAttribute('content', finalDesc);
+			if (ogDescTag) ogDescTag.setAttribute('content', finalDesc);
+			if (ogTitleTag) ogTitleTag.setAttribute('content', useEn ? titleEn : titleKr);
+		}
+
 		var stored = null;
 		try {
 			stored = localStorage.getItem('lang');
@@ -66,7 +95,12 @@ const { title, description } = Astro.props;
 			lang = nav.indexOf('ko') === 0 ? 'kr' : 'en';
 		}
 
-		document.documentElement.setAttribute('data-lang', lang);
-		document.documentElement.setAttribute('lang', lang === 'kr' ? 'ko' : 'en');
+		applyLang(lang);
+
+		// Header's language toggle dispatches this event so the tab title / meta
+		// description update instantly without a full page reload.
+		window.addEventListener('x1zz:langchange', function (e) {
+			applyLang(e.detail && e.detail.lang ? e.detail.lang : 'en');
+		});
 	})();
 </script>

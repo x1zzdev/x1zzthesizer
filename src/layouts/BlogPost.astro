@@ -7,13 +7,13 @@ import Header from '../components/Header.astro';
 
 type Props = CollectionEntry<'blog'>['data'];
 
-const { title, description, pubDate, updatedDate, author } = Astro.props;
+const { title, description, title_en, description_en, pubDate, updatedDate, author } = Astro.props;
 ---
 
 <!doctype html>
 <html lang="en" data-lang="en">
 	<head>
-		<BaseHead title={title} description={description} />
+		<BaseHead title={title} description={description} titleEn={title_en} descriptionEn={description_en} />
 	</head>
 	<body class="bg-black text-white min-h-screen flex flex-col" style="font-family: var(--font-sans);">
 		<Header />
@@ -31,7 +31,10 @@ const { title, description, pubDate, updatedDate, author } = Astro.props;
 							)
 						}
 					</p>
-					<h1 class="text-4xl md:text-6xl font-bold tracking-tighter text-white mb-4">{title}</h1>
+					<h1 class="text-4xl md:text-6xl font-bold tracking-tighter text-white mb-4">
+						<span class="lang-kr">{title}</span>
+						<span class="lang-en">{title_en ?? title}</span>
+					</h1>
 					<p
 						class="text-xs font-semibold tracking-widest text-white uppercase"
 						style="font-family: var(--font-mono);"

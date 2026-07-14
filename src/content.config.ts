@@ -10,6 +10,10 @@ const blog = defineCollection({
 		z.object({
 			title: z.string(),
 			description: z.string(),
+			// Optional English variants, used to swap the browser tab title / meta
+			// description when the site's language toggle is switched to English.
+			title_en: z.string().optional(),
+			description_en: z.string().optional(),
 			// Transform string to Date object
 			pubDate: z.coerce.date(),
 			updatedDate: z.coerce.date().optional(),

@@ -66,6 +66,7 @@ import HeaderLink from './HeaderLink.astro';
 			try {
 				localStorage.setItem('lang', next);
 			} catch (e) {}
+			window.dispatchEvent(new CustomEvent('x1zz:langchange', { detail: { lang: next } }));
 		});
 	})();
 </script>

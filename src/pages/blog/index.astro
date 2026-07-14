@@ -58,10 +58,12 @@ const posts = chronological
 									</span>
 								</div>
 								<h2 class="text-2xl font-bold tracking-tight text-white group-hover:text-black transition-colors duration-150 mb-2">
-									{post.data.title}
+									<span class="lang-kr">{post.data.title}</span>
+									<span class="lang-en">{post.data.title_en ?? post.data.title}</span>
 								</h2>
 								<p class="text-sm font-medium leading-relaxed text-white group-hover:text-zinc-800 transition-colors duration-150">
-									{post.data.description}
+									<span class="lang-kr">{post.data.description}</span>
+									<span class="lang-en">{post.data.description_en ?? post.data.description}</span>
 								</p>
 							</a>
 						</li>
