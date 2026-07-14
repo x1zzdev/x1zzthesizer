@@ -2,20 +2,16 @@
 // Import the global.css file here so that it is included on
 // all pages through the use of the <BaseHead /> component.
 import '../styles/global.css';
-import type { ImageMetadata } from 'astro';
-import FallbackImage from '../assets/blog-placeholder-1.jpg';
 import { SITE_TITLE } from '../consts';
-import { Font } from 'astro:assets';
 
 interface Props {
 	title: string;
 	description: string;
-	image?: ImageMetadata;
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
-const { title, description, image = FallbackImage } = Astro.props;
+const { title, description } = Astro.props;
 ---
 
 <!-- Global Metadata -->
@@ -32,7 +28,13 @@ const { title, description, image = FallbackImage } = Astro.props;
 />
 <meta name="generator" content={Astro.generator} />
 
-<Font cssVariable="--font-atkinson" preload />
+<!-- Fonts: JetBrains Mono + Inter with display=swap -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+	rel="stylesheet"
+	href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;700&display=swap"
+/>
 
 <!-- Canonical URL -->
 <link rel="canonical" href={canonicalURL} />
@@ -46,7 +48,25 @@ const { title, description, image = FallbackImage } = Astro.props;
 <meta property="og:url" content={Astro.url} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
-<meta property="og:image" content={new URL(image.src, Astro.url)} />
 
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image" />
+
+<!-- ─── Automatic language detection (localStorage + navigator.language) ── -->
+<script is:inline>
+	(function () {
+		var stored = null;
+		try {
+			stored = localStorage.getItem('lang');
+		} catch (e) {}
+
+		var lang = stored;
+		if (lang !== 'en' && lang !== 'kr') {
+			var nav = (navigator.language || navigator.userLanguage || 'en').toLowerCase();
+			lang = nav.indexOf('ko') === 0 ? 'kr' : 'en';
+		}
+
+		document.documentElement.setAttribute('data-lang', lang);
+		document.documentElement.setAttribute('lang', lang === 'kr' ? 'ko' : 'en');
+	})();
+</script>

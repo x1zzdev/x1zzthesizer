@@ -1,113 +1,73 @@
 ---
-import { Image } from 'astro:assets';
-import { getCollection } from 'astro:content';
 import BaseHead from '../../components/BaseHead.astro';
 import Footer from '../../components/Footer.astro';
 import FormattedDate from '../../components/FormattedDate.astro';
 import Header from '../../components/Header.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
+import { getCollection } from 'astro:content';
 
-const posts = (await getCollection('blog')).sort(
-	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+// Chronological (oldest → newest) order defines the numeric index used in URLs (/blog/1, /blog/2, ...).
+const chronological = (await getCollection('blog')).sort(
+	(a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf(),
 );
+
+// Display newest first, but keep the numeric index tied to chronological position.
+const posts = chronological
+	.map((post, index) => ({ post, id: index + 1 }))
+	.sort((a, b) => b.post.data.pubDate.valueOf() - a.post.data.pubDate.valueOf());
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" data-lang="en">
 	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-		<style>
-			main {
-				width: 960px;
-			}
-			ul {
-				display: flex;
-				flex-wrap: wrap;
-				gap: 2rem;
-				list-style-type: none;
-				margin: 0;
-				padding: 0;
-			}
-			ul li {
-				width: calc(50% - 1rem);
-			}
-			ul li * {
-				text-decoration: none;
-				transition: 0.2s ease;
-			}
-			ul li:first-child {
-				width: 100%;
-				margin-bottom: 1rem;
-				text-align: center;
-			}
-			ul li:first-child img {
-				width: 100%;
-			}
-			ul li:first-child .title {
-				font-size: 2.369rem;
-			}
-			ul li img {
-				margin-bottom: 0.5rem;
-				border-radius: 12px;
-			}
-			ul li a {
-				display: block;
-			}
-			.title {
-				margin: 0;
-				color: rgb(var(--black));
-				line-height: 1;
-			}
-			.date {
-				margin: 0;
-				color: rgb(var(--gray));
-			}
-			ul li a:hover h4,
-			ul li a:hover .date {
-				color: rgb(var(--accent));
-			}
-			ul a:hover img {
-				box-shadow: var(--box-shadow);
-			}
-			@media (max-width: 720px) {
-				ul {
-					gap: 0.5em;
-				}
-				ul li {
-					width: 100%;
-					text-align: center;
-				}
-				ul li:first-child {
-					margin-bottom: 0;
-				}
-				ul li:first-child .title {
-					font-size: 1.563em;
-				}
-			}
-		</style>
+		<BaseHead title={`/synthesizer — ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
 	</head>
-	<body>
+	<body class="bg-black text-white min-h-screen flex flex-col" style="font-family: var(--font-sans);">
 		<Header />
-		<main>
-			<section>
-				<ul>
-					{
-						posts.map((post) => (
-							<li>
-								<a href={`/blog/${post.id}/`}>
-									{post.data.heroImage && (
-										<Image width={720} height={360} src={post.data.heroImage} alt="" />
-									)}
-									<h4 class="title">{post.data.title}</h4>
-									<p class="date">
+		<main class="flex-1 w-full max-w-3xl mx-auto px-6 py-16">
+			<div class="border-b border-zinc-800 pb-3 mb-8">
+				<span
+					class="text-xs font-semibold tracking-widest text-white uppercase"
+					style="font-family: var(--font-mono);"
+				>
+					<span class="lang-en">// SYNTHESIZER_INDEX</span>
+					<span class="lang-kr">// 신디사이저 인덱스</span>
+				</span>
+			</div>
+
+			<ul class="space-y-6 list-none m-0 p-0">
+				{
+					posts.map(({ post, id }) => (
+						<li>
+							<a
+								href={`/blog/${id}/`}
+								class="group block border border-zinc-800 p-6 rounded hover:bg-white hover:text-black transition-all duration-150"
+							>
+								<div class="flex items-center justify-between mb-3">
+									<code
+										class="text-sm font-bold text-white group-hover:text-black transition-colors duration-150"
+										style="font-family: var(--font-mono);"
+									>
+										/blog/{id}
+									</code>
+									<span
+										class="text-xs font-semibold tracking-widest text-zinc-400 group-hover:text-zinc-800 transition-colors duration-150"
+										style="font-family: var(--font-mono);"
+									>
 										<FormattedDate date={post.data.pubDate} />
-									</p>
-								</a>
-							</li>
-						))
-					}
-				</ul>
-			</section>
+									</span>
+								</div>
+								<h2 class="text-2xl font-bold tracking-tight text-white group-hover:text-black transition-colors duration-150 mb-2">
+									{post.data.title}
+								</h2>
+								<p class="text-sm font-medium leading-relaxed text-white group-hover:text-zinc-800 transition-colors duration-150">
+									{post.data.description}
+								</p>
+							</a>
+						</li>
+					))
+				}
+			</ul>
 		</main>
 		<Footer />
 	</body>

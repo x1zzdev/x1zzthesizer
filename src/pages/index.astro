@@ -1,49 +1,167 @@
 ---
 import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer.astro';
-import Header from '../components/Header.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import { SITE_AUTHOR, SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" data-lang="en">
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 	</head>
-	<body>
-		<Header />
-		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This template
-				serves as a lightweight, minimally-styled starting point for anyone looking to build a personal
-				website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to
-				<a href="https://docs.astro.build/">read the docs</a>
-				or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out
-				<a href="https://github.com/Charca/astro-blog-template">astro-blog-template</a>
-				by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
+	<body class="bg-black text-white min-h-screen flex flex-col" style="font-family: var(--font-sans);">
+		<!-- ─── HEADER ─────────────────────────────────────────────────────── -->
+		<header class="w-full border-b border-zinc-800 px-6 py-4 grid grid-cols-3 items-center gap-4">
+			<!-- Left: Status indicator -->
+			<div class="flex items-center gap-2">
+				<span class="inline-block w-2 h-2 rounded-full bg-white pulse-dot shrink-0"></span>
+				<span class="text-xs tracking-widest text-white" style="font-family: var(--font-mono);"
+					>STATUS // SYSTEM_READY</span
+				>
+			</div>
+
+			<!-- Center: Manifesto slogan -->
+			<div class="flex justify-center">
+				<span
+					class="text-xs font-semibold tracking-widest text-white uppercase text-center"
+					style="font-family: var(--font-mono);"
+				>
+					<span class="lang-en">The synthesis of art and technology</span>
+					<span class="lang-kr">예술과 기술의 합성</span>
+				</span>
+			</div>
+
+			<!-- Right: Language toggle -->
+			<div class="flex justify-end">
+				<button
+					id="lang-toggle"
+					aria-label="Toggle language"
+					class="text-xs font-semibold tracking-widest border border-zinc-600 text-white hover:border-white transition-all duration-150 px-3 py-1 cursor-pointer"
+					style="font-family: var(--font-mono);"
+				>
+					<span class="lang-en">EN → KR</span>
+					<span class="lang-kr">KR → EN</span>
+				</button>
+			</div>
+		</header>
+
+		<!-- ─── HERO: 3-tier bold logo layout ─────────────────────────────── -->
+		<section class="w-full px-6 py-20 flex flex-col items-center">
+			<!-- Tier 1: Logo mark -->
+			<img src="/Xizzthesizer_logo.png" alt={SITE_TITLE} class="h-14 md:h-20 w-auto mb-6 select-none" />
+
+			<!-- Tier 2: Giant wordmark -->
+			<h1
+				class="text-7xl md:text-9xl font-bold tracking-tighter text-white select-none text-center"
+				style="font-family: var(--font-mono);"
+			>
+				Xizzthesizer
+			</h1>
+
+			<!-- Tier 3: Tagline -->
+			<div class="mt-10 max-w-3xl w-full">
+				<p class="text-sm font-medium leading-relaxed text-white text-center lang-en">
+					A digital media lab exploring the profound synthesis of technology, human philosophy, and
+					<span class="text-white font-bold" style="font-family: var(--font-mono);">aesthetic computing</span
+					>. Every record here is a fragment of that synthesis.
+				</p>
+				<p class="text-sm font-medium leading-relaxed text-white text-center lang-kr">
+					기술과 인간 철학, 그리고
+					<span class="text-white font-bold" style="font-family: var(--font-mono);">미학적 컴퓨팅</span>의 깊은
+					합성을 탐구하는 디지털 미디어 랩. 이곳의 모든 기록은 그 합성의 조각들입니다.
+				</p>
+			</div>
+		</section>
+
+		<!-- ─── DIRECTORY INDEX ────────────────────────────────────────────── -->
+		<main class="flex-1 w-full max-w-3xl mx-auto px-6 pb-20 space-y-6">
+			<!-- Section label -->
+			<div class="border-b border-zinc-800 pb-3">
+				<span
+					class="text-xs font-semibold tracking-widest text-white uppercase"
+					style="font-family: var(--font-mono);"
+				>
+					<span class="lang-en">// DIRECTORY_INDEX</span>
+					<span class="lang-kr">// 디렉토리 인덱스</span>
+				</span>
+			</div>
+
+			<!-- ── Pillar: Xizzthesizer / synthesizer ─────────────────────── -->
+			<a
+				href="/blog"
+				class="group block border border-zinc-800 p-6 rounded hover:bg-white hover:text-black transition-all duration-150"
+			>
+				<div class="flex items-center justify-between mb-4">
+					<div class="flex items-center gap-3">
+						<img
+							src="/Xizzthesizer_logo.png"
+							alt="Xizzthesizer"
+							class="h-6 w-auto opacity-80 group-hover:opacity-100 group-hover:invert transition-all duration-150"
+						/>
+						<code
+							class="text-sm font-bold text-white group-hover:text-black transition-colors duration-150"
+							style="font-family: var(--font-mono);">/synthesizer</code
+						>
+					</div>
+					<span
+						class="text-xs font-semibold tracking-widest text-white group-hover:text-zinc-800 transition-colors duration-150"
+						style="font-family: var(--font-mono);"
+					>
+						<span class="lang-en">[ART &amp; TECH ESSAYS]</span>
+						<span class="lang-kr">[예술 및 테크 에세이]</span>
+					</span>
+				</div>
+
+				<p
+					class="text-sm font-medium leading-relaxed text-white group-hover:text-zinc-800 transition-colors duration-150 lang-en"
+				>
+					A digital media lab exploring the profound synthesis of technology, human philosophy, and
+					aesthetic computing.
+				</p>
+				<p
+					class="text-sm font-medium leading-relaxed text-white group-hover:text-zinc-800 transition-colors duration-150 lang-kr"
+				>
+					기술과 인간 철학, 그리고 미학적 컴퓨팅의 강렬한 융합을 탐구하는 디지털 미디어 랩.
+				</p>
+			</a>
 		</main>
-		<Footer />
+
+		<!-- ─── FOOTER ─────────────────────────────────────────────────────── -->
+		<footer
+			class="w-full border-t border-zinc-800 px-6 py-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3"
+		>
+			<div
+				class="flex items-center gap-4 text-xs font-semibold text-white"
+				style="font-family: var(--font-mono);"
+			>
+				<span>xizzthesizer.com</span>
+				<span class="text-zinc-500">|</span>
+				<span>BUILD_001</span>
+			</div>
+
+			<div class="text-xs font-semibold text-white lang-en" style="font-family: var(--font-mono);">
+				&copy; {new Date().getFullYear()} {SITE_AUTHOR}. All rights reserved.
+			</div>
+			<div class="text-xs font-semibold text-white lang-kr" style="font-family: var(--font-mono);">
+				&copy; {new Date().getFullYear()} {SITE_AUTHOR}. 모든 권리 보유.
+			</div>
+		</footer>
+
+		<!-- ─── Minimal Language Toggle Script ────────────────────────────── -->
+		<script>
+			(function () {
+				var btn = document.getElementById('lang-toggle');
+				if (!btn) return;
+				btn.addEventListener('click', function () {
+					var html = document.documentElement;
+					var current = html.getAttribute('data-lang') || 'en';
+					var next = current === 'en' ? 'kr' : 'en';
+					html.setAttribute('data-lang', next);
+					html.setAttribute('lang', next === 'kr' ? 'ko' : 'en');
+					try {
+						localStorage.setItem('lang', next);
+					} catch (e) {}
+				});
+			})();
+		</script>
 	</body>
 </html>
