@@ -27,7 +27,7 @@ author: "장서우 (Seowoo Jang)"
 
 그 결과, 데이터 처리 라이브러리인 Pandas보다 **3.84배 빠른 고성능 Rust/Polars 기반 DSL 컴파일러 x1zzLang** 과 이를 시각적으로 다룰 수 있는 Visual DAG Pipeline IDE를 만들어냈습니다.
 
-![x1zzLang benchmark](/public\images\x1zzLang_benchmark2.png)
+![x1zzLang benchmark](\images\x1zzLang_benchmark2.png)
 
 > 🛠️ **Project Repositories:**
 > * [x1zzLang Compiler (Rust) 🔗](https://github.com/x1zzdev/x1zzLang)
@@ -80,7 +80,7 @@ Instead of writing a traditional spec, **I spent hours going back and forth with
 
 Piecing together the best parts of the open-source ecosystem, I built **x1zzLang — a high-performance Rust/Polars-based DSL compiler that runs 3.84x faster than Pandas** — along with a React-based Visual DAG Pipeline IDE to control it visually.
 
-![x1zzLang benchmark](/public\images\x1zzLang_benchmark2.png)
+![x1zzLang benchmark](\images\x1zzLang_benchmark2.png)
 
 > 🛠️ **Project Repositories:**
 > * [x1zzLang Compiler (Rust) 🔗](https://github.com/x1zzdev/x1zzLang)
