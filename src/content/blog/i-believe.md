@@ -1,5 +1,5 @@
 ---
-title: "나는 잃을 게 없는 규격 외의 빌더들이 새로운 표준이 될 것이라 믿습니다"
+title: "저는 잃을 게 없는 규격 외의 빌더들이 새로운 표준이 될 것이라 믿습니다"
 title_en: "I Believe Outliers With Nothing to Lose Are the Ones Who Set the Next Standard"
 description: "기술 파편화의 시대 속에서, 3.84배 빠른 x1zzLang과 지분 교환형 인프라 플랫폼을 통해 실행으로 가치를 증명하려는 이유"
 description_en: "Why I built x1zzLang (3.84x faster than Pandas) and launched an equity-exchange infrastructure platform to prove value through execution, not talk."
